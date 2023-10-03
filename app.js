@@ -138,14 +138,14 @@ function showResults() {
       datasets: [
         {
           type: "bar",
-          label: "# of clicks",
-          data: productClicks,
+          label: "# of views",
+          data: productViews,
           borderWidth: 6,
         },
         {
           type: "bar",
-          label: "# of views",
-          data: productViews,
+          label: "# of clicks",
+          data: productClicks,
           borderWidth: 6,
         },
         {
