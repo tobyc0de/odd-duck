@@ -10,16 +10,21 @@
   </head>
   <body>
     <h1>Products</h1>
+    <h2>Please vote for your favorite product!</h2>
+    <h2 id="remaining-clicks">Remaining Clicks: 25</h2>
+
     <section id="productContainer">
       <img alt="image1" id="image1" />
       <img alt="image2" id="image2" />
       <img alt="image3" id="image3" />
     </section>
-    <div id="remaining-clicks"></div>
     <section>
       <ul id="results"></ul>
     </section>
-    <section><canvas id="myChart">Fallback text</canvas></section>
+    <section id="chartsection">
+      <h2>Results</h2>
+      <canvas id="myChart">Fallback text</canvas>
+    </section>
   </body>
   <script src="app.js" defer></script>
 </html>

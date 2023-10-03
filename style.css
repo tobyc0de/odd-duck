@@ -1,7 +1,15 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 10px auto;
+}
 section img {
-  border: 5px solid black;
+  border: 20px solid #ff6384;
   margin: 5px;
-  width: 300px;
+  width: 360px;
   height: 300px;
 }
 
@@ -13,6 +21,51 @@ section {
 }
 
 #myChart {
-  max-height: 500px;
-  max-width: 1000px;
+  height: 500px;
+  width: 1000px;
+  padding: 50px;
+}
+
+#chartsection {
+  border: 20px solid #ff6384;
+  background-color: lightgray;
+  height: 700px;
+  width: 1180px;
+  flex-direction: column;
+  display: none;
+  flex-basis: content;
+}
+
+h1,
+h2,
+section {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+h2 {
+  padding: 10px;
+  background-color: #ff6384;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+h1 {
+  padding: 10px;
+  background-color: #ff6384;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 300%;
+  font-weight: bold;
+}
+
+#productContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
 }

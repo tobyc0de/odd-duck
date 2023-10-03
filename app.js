@@ -3,6 +3,7 @@ let productContainer = document.querySelector("#productContainer");
 let image1 = document.querySelector("#productContainer img:nth-child(1)");
 let image2 = document.querySelector("#productContainer img:nth-child(2)");
 let image3 = document.querySelector("#productContainer img:nth-child(3)");
+let chartsection = document.querySelector("#chartsection");
 let userClicks = 0;
 let maxClicks = 25;
 let currentProduct1;
@@ -81,7 +82,9 @@ function handleProductClick(event) {
   if (userClicks >= maxClicks - 1) {
     updateStats();
     showResults();
-    remainingClicksDiv.textContent = `You have used up all your votes.`;
+    productContainer.remove();
+    remainingClicksDiv.remove();
+    chartsection.style.display = "flex";
   }
   let clickedProduct = event.target.alt;
   if (event.target === productContainer) {
