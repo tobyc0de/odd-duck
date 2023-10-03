@@ -83,7 +83,6 @@ function handleProductClick(event) {
     updateStats();
     showResults();
     productContainer.remove();
-    remainingClicksDiv.remove();
     chartsection.style.display = "flex";
   }
   let clickedProduct = event.target.alt;
