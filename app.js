@@ -5,6 +5,9 @@ let image2 = document.querySelector("#productContainer img:nth-child(2)");
 let image3 = document.querySelector("#productContainer img:nth-child(3)");
 let userClicks = 0;
 let maxClicks = 25;
+let currentProduct1;
+let currentProduct2;
+let currentProduct3;
 
 function Product(name, src, views, clicks) {
   this.name = name;
@@ -24,6 +27,31 @@ function renderProducts() {
   let product2Index = getRandomIndex();
   let product3Index = getRandomIndex();
 
+  // prevent repeated images after clicks
+  while (
+    product3Index === currentProduct1 ||
+    product3Index === currentProduct2 ||
+    product3Index === currentProduct3
+  ) {
+    product3Index = getRandomIndex();
+  }
+
+  while (
+    product1Index === currentProduct1 ||
+    product1Index === currentProduct2 ||
+    product1Index === currentProduct3
+  ) {
+    product1Index = getRandomIndex();
+  }
+
+  while (
+    product2Index === currentProduct1 ||
+    product2Index === currentProduct2 ||
+    product2Index === currentProduct3
+  ) {
+    product2Index = getRandomIndex();
+  }
+
   // prevent them from being the same
   while (
     product1Index === product2Index ||
@@ -34,11 +62,6 @@ function renderProducts() {
     product3Index = getRandomIndex();
   }
 
-  while (product2Index === product3Index) {}
-  console.log(product1Index);
-  console.log(product2Index);
-  console.log(product3Index);
-
   image1.src = allProducts[product1Index].src;
   image2.src = allProducts[product2Index].src;
   image3.src = allProducts[product3Index].src;
@@ -48,12 +71,17 @@ function renderProducts() {
   allProducts[product1Index].views++;
   allProducts[product2Index].views++;
   allProducts[product3Index].views++;
+  currentProduct1 = product1Index;
+  currentProduct2 = product2Index;
+  currentProduct3 = product3Index;
 }
 
 function handleProductClick(event) {
-  if (userClicks >= maxClicks) {
+  const remainingClicksDiv = document.getElementById("remaining-clicks");
+  if (userClicks >= maxClicks - 1) {
     updateStats();
-    alert("No more clicking now you rascal!");
+    showResults();
+    remainingClicksDiv.textContent = `You have used up all your votes.`;
   }
   let clickedProduct = event.target.alt;
   if (event.target === productContainer) {
@@ -61,6 +89,8 @@ function handleProductClick(event) {
   } else {
     renderProducts();
     userClicks++;
+    let remainingClicks = maxClicks - userClicks;
+    remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
     console.log(`userclicks: ${userClicks}`);
   }
 
@@ -100,42 +130,45 @@ productContainer.addEventListener("click", handleProductClick);
 
 function showResults() {
   const config = new Chart(ctx, {
-    type: "bar",
     data: {
       labels: productNames,
       datasets: [
         {
+          type: "bar",
           label: "# of clicks",
           data: productClicks,
           borderWidth: 6,
-          backgroundColor: ["red", "#cdaa7f", "skyblue", "green", "orange"],
         },
         {
-          type: "line",
+          type: "bar",
           label: "# of views",
           data: productViews,
           borderWidth: 6,
-          backgroundColor: ["red", "#cdaa7f", "skyblue", "green", "orange"],
+        },
+        {
+          type: "line",
+          label: "CTR in 10%",
+          data: productCTRs,
+          borderWidth: 6,
         },
       ],
     },
   });
 }
 
-// make the button show the results
-const viewResults = document.getElementById("show-results");
-viewResults.addEventListener("click", showResults);
-
 const ctx = document.getElementById("myChart");
 const productNames = [];
 const productClicks = [];
 const productViews = [];
+const productCTRs = [];
 
 function updateStats() {
   for (i = 0; i < allProducts.length; i++) {
     productNames.push(allProducts[i].name);
     productClicks.push(allProducts[i].clicks);
     productViews.push(allProducts[i].views);
+    productCTRs.push((allProducts[i].clicks / allProducts[i].views) * 10);
+
     console.log(productViews);
   }
 }
