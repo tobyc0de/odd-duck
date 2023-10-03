@@ -11,6 +11,7 @@ section img {
   margin: 5px;
   width: 360px;
   height: 300px;
+  border-radius: 100%;
 }
 
 section {
