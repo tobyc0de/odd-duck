@@ -36,6 +36,7 @@ section {
   display: none;
   flex-basis: content;
   margin-top: 5px;
+  border-radius: 15px;
 }
 
 h1,
