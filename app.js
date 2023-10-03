@@ -3,6 +3,8 @@ let productContainer = document.querySelector("#productContainer");
 let image1 = document.querySelector("#productContainer img:nth-child(1)");
 let image2 = document.querySelector("#productContainer img:nth-child(2)");
 let image3 = document.querySelector("#productContainer img:nth-child(3)");
+let userClicks = 0;
+let maxClicks = 25;
 
 function Product(name, src, views, clicks) {
   this.name = name;
@@ -23,16 +25,16 @@ function renderProducts() {
   let product3Index = getRandomIndex();
 
   // prevent them from being the same
-  while (product1Index === product2Index || product1Index === product3Index) {
-    product1Index = getRandomIndex();
-    console.log(product1Index);
-    console.log(product2Index);
-    console.log(product3Index);
+  while (
+    product1Index === product2Index ||
+    product1Index === product3Index ||
+    product2Index === product3Index
+  ) {
+    product2Index = getRandomIndex();
+    product3Index = getRandomIndex();
   }
 
-  while (product2Index === product3Index) {
-    product2Index = getRandomIndex();
-  }
+  while (product2Index === product3Index) {}
   console.log(product1Index);
   console.log(product2Index);
   console.log(product3Index);
@@ -49,16 +51,23 @@ function renderProducts() {
 }
 
 function handleProductClick(event) {
+  if (userClicks >= maxClicks) {
+    updateStats();
+    alert("No more clicking now you rascal!");
+  }
   let clickedProduct = event.target.alt;
   if (event.target === productContainer) {
     alert("please click on an image");
   } else {
     renderProducts();
+    userClicks++;
+    console.log(`userclicks: ${userClicks}`);
   }
 
   for (let i = 0; i < allProducts.length; i++) {
     if (clickedProduct === allProducts[i].name) {
       allProducts[i].clicks++;
+
       break;
     }
   }
@@ -88,5 +97,47 @@ const allProducts = [
 ];
 
 productContainer.addEventListener("click", handleProductClick);
+
+function showResults() {
+  const config = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: productNames,
+      datasets: [
+        {
+          label: "# of clicks",
+          data: productClicks,
+          borderWidth: 6,
+          backgroundColor: ["red", "#cdaa7f", "skyblue", "green", "orange"],
+        },
+        {
+          type: "line",
+          label: "# of views",
+          data: productViews,
+          borderWidth: 6,
+          backgroundColor: ["red", "#cdaa7f", "skyblue", "green", "orange"],
+        },
+      ],
+    },
+  });
+}
+
+// make the button show the results
+const viewResults = document.getElementById("show-results");
+viewResults.addEventListener("click", showResults);
+
+const ctx = document.getElementById("myChart");
+const productNames = [];
+const productClicks = [];
+const productViews = [];
+
+function updateStats() {
+  for (i = 0; i < allProducts.length; i++) {
+    productNames.push(allProducts[i].name);
+    productClicks.push(allProducts[i].clicks);
+    productViews.push(allProducts[i].views);
+    console.log(productViews);
+  }
+}
 
 renderProducts();
