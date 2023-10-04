@@ -5,9 +5,17 @@ body {
   justify-content: center;
   max-width: 1200px;
   margin: 10px auto;
+  background-color: #00296b;
+  color: 001427;
+  font-family: "Knewave", serif;
 }
+
+#logo {
+  max-height: 200px;
+}
+
 section img {
-  border: 20px solid #ff6384;
+  border: 20px solid #f6b206;
   margin: 5px;
   width: 360px;
   height: 300px;
@@ -19,17 +27,20 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Knewave", serif;
 }
 
 #myChart {
   height: 500px;
   width: 1000px;
   padding: 50px;
+  font-family: "Knewave", serif;
 }
 
 #chartsection {
-  border: 20px solid #ff6384;
-  background-color: lightgray;
+  border: 20px solid #00509d;
+  background-color: #f6b206;
+
   height: 700px;
   width: 1180px;
   flex-direction: column;
@@ -37,6 +48,7 @@ section {
   flex-basis: content;
   margin-top: 5px;
   border-radius: 15px;
+  font-family: "Knewave", serif;
 }
 
 h1,
@@ -46,13 +58,14 @@ section {
   margin-bottom: 0px;
   width: 100%;
   max-width: 1200px;
+  font-family: "Knewave", serif;
 }
 
 h2 {
   padding: 10px;
-  background-color: #ff6384;
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #00509d;
+  color: #f6b206;
+  font-family: "Knewave", serif;
   text-align: center;
   font-size: 150%;
   font-weight: bold;
@@ -62,9 +75,9 @@ h2 {
 
 h1 {
   padding: 10px;
-  background-color: #ff6384;
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #00509d;
+  color: #f6b206;
+  font-family: "Knewave", serif;
   text-align: center;
   font-size: 300%;
   font-weight: bold;
@@ -75,4 +88,5 @@ h1 {
 #productContainer {
   display: grid;
   grid-template-columns: auto auto auto;
+  font-family: "Knewave", serif;
 }
