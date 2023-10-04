@@ -87,3 +87,21 @@ h1 {
   width: 100%;
   background-color: #00509d;
 }
+
+/* Ripple effect */
+.ripple {
+  background-position: center;
+  transition: background 5.5s;
+  height: 350px;
+  width: 350px;
+}
+.ripple:hover {
+  background: #ffffff radial-gradient(circle, transparent 1%, #0082b1 1%)
+    center/15000%;
+  text-shadow: 1px 1px 7px #030303;
+}
+.ripple:active {
+  background-color: #e8e8e8;
+  background-size: 100%;
+  transition: background 0s;
+}
