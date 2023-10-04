@@ -7,7 +7,7 @@ let chartsection = document.querySelector("#chartsection");
 let remainingClicks;
 const remainingClicksDiv = document.getElementById("remaining-clicks");
 let userClicks;
-const maxClicks = 25;
+const maxClicks = 20;
 let currentProduct1;
 let currentProduct2;
 let currentProduct3;
@@ -20,20 +20,20 @@ function Product(name, views, clicks) {
   allProducts.push(this);
 }
 
+checkLocal();
+
 function checkLocalUserClicks() {
   const userClicksFromLS = JSON.parse(localStorage.getItem("userClicksFromLS"));
   if (userClicksFromLS) {
     userClicks = userClicksFromLS;
-  }
-  if (userClicks >= maxClicks) {
-    updateStats();
-    productContainer.remove();
-    chartsection.style.display = "flex";
-    showResults();
-  } else if (!userClicksFromLS) {
-    userClicks = 0;
+    remainingClicks = maxClicks - userClicks;
+    remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
+    if (userClicks >= maxClicks) {
+      updateStats();
+      showResults();
+    }
   } else {
-    userClicks = userClicksFromLS;
+    userClicks = 0;
     remainingClicks = maxClicks - userClicks;
     remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
   }
@@ -138,8 +138,6 @@ function handleProductClick(event) {
   if (userClicks >= maxClicks - 1) {
     updateStats();
     showResults();
-    productContainer.remove();
-    chartsection.style.display = "flex";
   }
   let clickedProduct = event.target.alt;
   if (event.target === productContainer) {
@@ -169,7 +167,11 @@ const productNames = [];
 const productClicks = [];
 const productViews = [];
 const productCTRs = [];
+
 function showResults() {
+  remainingClicksDiv.remove();
+  productContainer.remove();
+  chartsection.style.display = "flex";
   const config = new Chart(ctx, {
     data: {
       labels: productNames,
@@ -186,7 +188,7 @@ function showResults() {
           label: "# of clicks",
           data: productClicks,
           borderWidth: 6,
-          borderColor: "#f62206",
+          borderColor: "#cc3603",
         },
         {
           type: "line",
@@ -222,7 +224,5 @@ function putIntoLocalStorage() {
   localStorage.setItem("userClicksFromLS", userClicksStringified);
 }
 checkLocalUserClicks();
-
-checkLocal();
 
 renderProducts();
