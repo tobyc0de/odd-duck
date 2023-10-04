@@ -4,17 +4,72 @@ let image1 = document.querySelector("#productContainer img:nth-child(1)");
 let image2 = document.querySelector("#productContainer img:nth-child(2)");
 let image3 = document.querySelector("#productContainer img:nth-child(3)");
 let chartsection = document.querySelector("#chartsection");
-let userClicks = 0;
-let maxClicks = 25;
+let remainingClicks;
+const remainingClicksDiv = document.getElementById("remaining-clicks");
+let userClicks;
+const maxClicks = 25;
 let currentProduct1;
 let currentProduct2;
 let currentProduct3;
-
-function Product(name, src, views, clicks) {
+const allProducts = [];
+function Product(name, views, clicks) {
   this.name = name;
-  this.src = src;
-  this.views = 0;
-  this.clicks = 0;
+  this.src = `./img/${name}.jpg`;
+  this.views = views;
+  this.clicks = clicks;
+  allProducts.push(this);
+}
+
+function checkLocalUserClicks() {
+  const userClicksFromLS = JSON.parse(localStorage.getItem("userClicksFromLS"));
+
+  if (userClicks >= maxClicks) {
+    updateStats();
+    productContainer.remove();
+    chartsection.style.display = "flex";
+    showResults();
+  } else if (!userClicksFromLS) {
+    userClicks = 0;
+  } else {
+    userClicks = userClicksFromLS;
+    remainingClicks = maxClicks - userClicks;
+    remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
+  }
+}
+
+function checkLocal() {
+  const productsFromLS = JSON.parse(localStorage.getItem("productsFromLS"));
+  // if there is nothing in localStorage for the products:
+  // instantiate my default products (0 views and clicks)
+  if (localStorage.getItem("productsFromLS") === null) {
+    new Product("bag", 0, 0);
+    new Product("banana", 0, 0);
+    new Product("bathroom", 0, 0);
+    new Product("boots", 0, 0);
+    new Product("breakfast", 0, 0);
+    new Product("bubblegum", 0, 0);
+    new Product("chair", 0, 0);
+    new Product("cthulhu", 0, 0);
+    new Product("dog-duck", 0, 0);
+    new Product("dragon", 0, 0);
+    new Product("pen", 0, 0);
+    new Product("pet-sweep", 0, 0);
+    new Product("scissors", 0, 0);
+    new Product("shark", 0, 0);
+    new Product("sweep", 0, 0);
+    new Product("tauntaun", 0, 0);
+    new Product("unicorn", 0, 0);
+    new Product("water-can", 0, 0);
+    new Product("wine-glass", 0, 0);
+  } else {
+    for (let i = 0; i < productsFromLS.length; i++) {
+      new Product(
+        productsFromLS[i].name,
+        productsFromLS[i].views,
+        productsFromLS[i].clicks
+      );
+    }
+  }
 }
 
 // function to choose a random product
@@ -78,7 +133,6 @@ function renderProducts() {
 }
 
 function handleProductClick(event) {
-  const remainingClicksDiv = document.getElementById("remaining-clicks");
   if (userClicks >= maxClicks - 1) {
     updateStats();
     showResults();
@@ -91,45 +145,28 @@ function handleProductClick(event) {
   } else {
     renderProducts();
     userClicks++;
-    let remainingClicks = maxClicks - userClicks;
+    remainingClicks = maxClicks - userClicks;
     remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
     console.log(`userclicks: ${userClicks}`);
+    putIntoLocalStorage();
   }
 
   for (let i = 0; i < allProducts.length; i++) {
     if (clickedProduct === allProducts[i].name) {
       allProducts[i].clicks++;
+      putIntoLocalStorage();
 
       break;
     }
   }
 }
 
-// make products
-const allProducts = [
-  new Product("bag", "./img/bag.jpg"),
-  new Product("banana", "./img/banana.jpg"),
-  new Product("bathroom", "./img/bathroom.jpg"),
-  new Product("boots", "./img/boots.jpg"),
-  new Product("breakfast", "./img/breakfast.jpg"),
-  new Product("bubblegum", "./img/bubblegum.jpg"),
-  new Product("chair", "./img/chair.jpg"),
-  new Product("cthulhu", "./img/cthulhu.jpg"),
-  new Product("dog-duck", "./img/dog-duck.jpg"),
-  new Product("dragon", "./img/dragon.jpg"),
-  new Product("pen", "./img/pen.jpg"),
-  new Product("pet-sweep", "./img/pet-sweep.jpg"),
-  new Product("scissors", "./img/scissors.jpg"),
-  new Product("shark", "./img/shark.jpg"),
-  new Product("sweep", "./img/sweep.png"),
-  new Product("tauntaun", "./img/tauntaun.jpg"),
-  new Product("water-can", "./img/water-can.jpg"),
-  new Product("unicorn", "./img/unicorn.jpg"),
-  new Product("wine-glass", "./img/wine-glass.jpg"),
-];
-
 productContainer.addEventListener("click", handleProductClick);
-
+const ctx = document.getElementById("myChart");
+const productNames = [];
+const productClicks = [];
+const productViews = [];
+const productCTRs = [];
 function showResults() {
   const config = new Chart(ctx, {
     data: {
@@ -165,12 +202,6 @@ function showResults() {
   });
 }
 
-const ctx = document.getElementById("myChart");
-const productNames = [];
-const productClicks = [];
-const productViews = [];
-const productCTRs = [];
-
 function updateStats() {
   for (i = 0; i < allProducts.length; i++) {
     productNames.push(allProducts[i].name);
@@ -182,4 +213,14 @@ function updateStats() {
   }
 }
 
+function putIntoLocalStorage() {
+  const productsStringified = JSON.stringify(allProducts);
+  localStorage.setItem("productsFromLS", productsStringified);
+  const userClicksStringified = JSON.stringify(userClicks);
+  localStorage.setItem("userClicksFromLS", userClicksStringified);
+}
+checkLocal();
+
 renderProducts();
+
+checkLocalUserClicks();
