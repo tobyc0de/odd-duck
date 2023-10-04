@@ -22,7 +22,9 @@ function Product(name, views, clicks) {
 
 function checkLocalUserClicks() {
   const userClicksFromLS = JSON.parse(localStorage.getItem("userClicksFromLS"));
-
+  if (userClicksFromLS) {
+    userClicks = userClicksFromLS;
+  }
   if (userClicks >= maxClicks) {
     updateStats();
     productContainer.remove();
@@ -219,8 +221,8 @@ function putIntoLocalStorage() {
   const userClicksStringified = JSON.stringify(userClicks);
   localStorage.setItem("userClicksFromLS", userClicksStringified);
 }
+checkLocalUserClicks();
+
 checkLocal();
 
 renderProducts();
-
-checkLocalUserClicks();
