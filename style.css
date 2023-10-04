@@ -15,7 +15,7 @@ body {
 }
 
 section img {
-  border: 20px solid #f6b206;
+  border: 20px solid #65c5e7;
   margin: 5px;
   width: 360px;
   height: 300px;
@@ -39,7 +39,7 @@ section {
 
 #chartsection {
   border: 20px solid #00509d;
-  background-color: #f6b206;
+  background-color: #65c5e7;
 
   height: 700px;
   width: 1180px;
@@ -64,7 +64,7 @@ section {
 h2 {
   padding: 10px;
   background-color: #00509d;
-  color: #f6b206;
+  color: #65c5e7;
   font-family: "Knewave", serif;
   text-align: center;
   font-size: 150%;
