@@ -8,8 +8,16 @@ body {
   background-size: cover;
   color: 001427;
   font-family: "Knewave", serif;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 1008px;
 }
 
+header {
+  margin-bottom: -2px;
+}
 header,
 #logo {
   width: 100%;
@@ -27,6 +35,19 @@ section img:hover {
   cursor: cell;
 }
 
+#showResultsBtn {
+  display: none;
+  height: 300px;
+  width: 100%;
+  font-size: 100px;
+  background-color: rgba(0, 81, 157, 0.6);
+  color: black;
+}
+
+#showResultsBtn:hover {
+  cursor: grabbing;
+}
+
 section {
   grid-template-columns: auto auto auto;
   display: flex;
@@ -38,15 +59,13 @@ section {
 
 #myChart {
   height: 500px;
-  width: 1000px;
+  max-width: 1000px;
   padding: 50px;
   font-family: "Knewave", serif;
 }
 
 #chartsection {
-  border: 20px solid #00509d;
-  background-color: #65c5e7;
-
+  background-color: rgba(0, 81, 157, 0.6);
   height: 700px;
   width: 100%;
   flex-direction: column;
@@ -66,26 +85,23 @@ section {
 h1,
 h2,
 section {
-  margin-top: -10px;
-  margin-bottom: 0px;
   width: 100%;
   font-family: "Knewave", serif;
 }
 
 h2 {
   padding: 10px;
-  background-color: #00509d;
+  background-color: rgba(0, 81, 157, 0.6);
   color: #65c5e7;
   font-family: "Knewave", serif;
   text-align: center;
   font-size: 150%;
   font-weight: bold;
-  border-bottom: 10px solid #00509d;
 }
 
 h1 {
   padding: 10px;
-  background-color: #00509d;
+  background-color: rgba(0, 81, 157, 0.6);
   color: #f6b206;
   font-family: "Knewave", serif;
   text-align: center;
@@ -98,7 +114,7 @@ h1 {
   grid-template-columns: auto auto auto;
   font-family: "Knewave", serif;
   width: 100%;
-  background-color: #00509d;
+  background-color: rgba(0, 81, 157, 0.6);
 }
 
 /* Ripple effect */
@@ -109,12 +125,12 @@ h1 {
   width: 350px;
 }
 .ripple:hover {
-  background: #ffffff radial-gradient(circle, transparent 1%, #0082b1 1%)
+  background: radial-gradient(circle, transparent 1%, rgba(0, 81, 157, 1) 2%)
     center/15000%;
   text-shadow: 1px 1px 7px #030303;
 }
 .ripple:active {
-  background-color: #e8e8e8;
+  /* background-color: rgba(0, 81, 157, 0.6); */
   background-size: 100%;
   transition: background 0s;
 }

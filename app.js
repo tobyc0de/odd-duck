@@ -30,7 +30,6 @@ function checkLocalUserClicks() {
     remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
     if (userClicks >= maxClicks) {
       updateStats();
-      showResults();
     }
   } else {
     userClicks = 0;
@@ -134,27 +133,33 @@ function renderProducts() {
   currentProduct3 = product3Index;
 }
 
+function showStatsBtn() {
+  let resultsBtn = document.querySelector("#showResultsBtn");
+  resultsBtn.style.display = "inherit";
+}
+
 function handleProductClick(event) {
-  if (userClicks >= maxClicks - 1) {
-    updateStats();
-    showResults();
-  }
   let clickedProduct = event.target.alt;
-  if (event.target === productContainer) {
-    alert("please click on an image");
+
+  if (userClicks >= maxClicks - 1) {
+    productContainer.remove();
+    remainingClicksDiv.remove();
+    showStatsBtn();
   } else {
-    renderProducts();
-    userClicks++;
-    remainingClicks = maxClicks - userClicks;
-    remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
-    console.log(`userclicks: ${userClicks}`);
-    putIntoLocalStorage();
+    if (event.target === productContainer) {
+      alert("please click on an image");
+    } else {
+      renderProducts();
+      userClicks++;
+      remainingClicks = maxClicks - userClicks;
+      remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
+      putIntoLocalStorage();
+    }
   }
 
   for (let i = 0; i < allProducts.length; i++) {
     if (clickedProduct === allProducts[i].name) {
       allProducts[i].clicks++;
-      putIntoLocalStorage();
 
       break;
     }
@@ -168,53 +173,16 @@ const productClicks = [];
 const productViews = [];
 const productCTRs = [];
 
-function showResults() {
-  remainingClicksDiv.remove();
-  productContainer.remove();
-  chartsection.style.display = "flex";
-  const config = new Chart(ctx, {
-    data: {
-      labels: productNames,
-      datasets: [
-        {
-          type: "bar",
-          label: "# of views",
-          data: productViews,
-          borderWidth: 6,
-          borderColor: "#ffd500",
-        },
-        {
-          type: "bar",
-          label: "# of clicks",
-          data: productClicks,
-          borderWidth: 6,
-          borderColor: "#cc3603",
-        },
-        {
-          type: "line",
-          label: "CTR in 10%",
-          data: productCTRs,
-          borderWidth: 6,
-          borderColor: "#00509d",
-          font: {
-            weight: "bold",
-            size: 26,
-          },
-        },
-      ],
-    },
-  });
-}
-
 function updateStats() {
   for (i = 0; i < allProducts.length; i++) {
     productNames.push(allProducts[i].name);
     productClicks.push(allProducts[i].clicks);
     productViews.push(allProducts[i].views);
     productCTRs.push((allProducts[i].clicks / allProducts[i].views) * 10);
-
-    console.log(productViews);
   }
+  console.log(
+    "stats productNames, ProductClicks, ProductViews and ProductCTRs updated and pushed in to allProducts"
+  );
 }
 
 function putIntoLocalStorage() {
@@ -222,6 +190,9 @@ function putIntoLocalStorage() {
   localStorage.setItem("productsFromLS", productsStringified);
   const userClicksStringified = JSON.stringify(userClicks);
   localStorage.setItem("userClicksFromLS", userClicksStringified);
+  console.log(
+    "allProducts and userClicksFromLS stringified and saved in LocalStorage"
+  );
 }
 checkLocalUserClicks();
 
