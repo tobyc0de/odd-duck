@@ -23,6 +23,10 @@ section img {
   border-radius: 20%;
 }
 
+section img:hover {
+  cursor: cell;
+}
+
 section {
   grid-template-columns: auto auto auto;
   display: flex;
