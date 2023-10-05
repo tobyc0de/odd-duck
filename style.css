@@ -56,9 +56,13 @@ section {
   font-family: "Knewave", serif;
   padding-bottom: 50px;
 }
+a {
+  text-decoration: underline;
+  color: #65c5e7;
+}
 
 #myChart {
-  height: 500px;
+  max-height: 500px;
   max-width: 1000px;
   padding: 50px;
   font-family: "Knewave", serif;

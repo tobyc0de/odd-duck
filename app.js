@@ -136,12 +136,16 @@ function renderProducts() {
 function showStatsBtn() {
   let resultsBtn = document.querySelector("#showResultsBtn");
   resultsBtn.style.display = "inherit";
+  productContainer.remove();
+  remainingClicksDiv.remove();
+  productContainer.style.display = "none";
+  remainingClicksDiv.style.display = "none";
 }
 
 function handleProductClick(event) {
   let clickedProduct = event.target.alt;
 
-  if (userClicks >= maxClicks - 1) {
+  if (userClicks >= maxClicks) {
     productContainer.remove();
     remainingClicksDiv.remove();
     showStatsBtn();
@@ -149,8 +153,8 @@ function handleProductClick(event) {
     if (event.target === productContainer) {
       alert("please click on an image");
     } else {
-      renderProducts();
       userClicks++;
+      renderProducts();
       remainingClicks = maxClicks - userClicks;
       remainingClicksDiv.textContent = `Remaining Clicks: ${remainingClicks}`;
       putIntoLocalStorage();
@@ -198,12 +202,12 @@ checkLocalUserClicks();
 
 renderProducts();
 
-function reset() {
-  userClicks = 0;
-  localStorage.removeItem("productsFromLS");
-  localStorage.removeItem("userClicksFromLS");
-  location.reload();
-}
+// function reset() {
+//   userClicks = 0;
+//   localStorage.removeItem("productsFromLS");
+//   localStorage.removeItem("userClicksFromLS");
+//   location.reload();
+// }
 
-const resetBtn = document.querySelector("#resetBtn");
-resetBtn.addEventListener("click", reset);
+// const resetBtn = document.querySelector("#resetBtn");
+// resetBtn.addEventListener("click", reset);
