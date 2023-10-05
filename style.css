@@ -55,6 +55,14 @@ section {
   font-family: "Knewave", serif;
 }
 
+#resetBtn {
+  padding: 5px 20px;
+  background-color: #f6b206;
+  font-size: 150%;
+  border-radius: 15px;
+  border: 5px solid #00509d;
+  margin-top: 10px;
+}
 h1,
 h2,
 section {
