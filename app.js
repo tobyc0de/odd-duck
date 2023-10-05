@@ -202,12 +202,12 @@ checkLocalUserClicks();
 
 renderProducts();
 
-// function reset() {
-//   userClicks = 0;
-//   localStorage.removeItem("productsFromLS");
-//   localStorage.removeItem("userClicksFromLS");
-//   location.reload();
-// }
+function reset() {
+  userClicks = 0;
+  localStorage.removeItem("productsFromLS");
+  localStorage.removeItem("userClicksFromLS");
+  location.reload();
+}
 
-// const resetBtn = document.querySelector("#resetBtn");
-// resetBtn.addEventListener("click", reset);
+const resetBtn = document.querySelector("#resetBtn");
+resetBtn.addEventListener("click", reset);
